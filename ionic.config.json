@@ -1,0 +1,8 @@
+{
+  "name": "id90",
+  "app_id": "a755e096",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
