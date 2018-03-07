@@ -5,9 +5,9 @@ export class Task {
     importance: number;
 
     constructor(json: any){
-        this.name = json.name;
-        this.order = json.order;
-        this.importance = json.importance;
+        this.name = json.name || '';
+        this.order = json.order || '';
+        this.importance = json.importance || '';
         if(json.id) this.id = json.id;
     }
 }

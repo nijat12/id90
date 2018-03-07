@@ -59,14 +59,19 @@ export class HomePage implements OnInit {
     // do something
   }
 
-  public openConfig(task: Task) {
+  public openConfig(card: Card, task: Task) {
     let modal = this.modalCtrl.create(EditModal, {'task': task});
     modal.onDidDismiss(data => {
       if(data) {
-        task = data;
+        if(task) task = data;
+        else this.saveNewTask(card, data);
       }
     });
     modal.present();
+  }
+
+  saveNewTask (card, data){
+    card.tasks.push(data);
   }
 
   ngOnInit() {

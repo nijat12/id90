@@ -14,6 +14,7 @@ export class EditModal {
         public viewCtrl: ViewController,
         private params: NavParams) {
         this.myParam = params.get('task');
+        if(!this.myParam) this.myParam = new Task({});
     }
 
     dismiss() {

@@ -20,9 +20,14 @@
                     <div class='right detector'>
                         &nbsp;
                     </div>
-                    <ion-card *ngFor="let task of card.tasks" (click)="openConfig(task)">
+                    <ion-card *ngFor="let task of card.tasks" (click)="openConfig(card, task)">
                         <ion-card-header>
                             {{task.name}}
+                        </ion-card-header>
+                    </ion-card>
+                    <ion-card>
+                        <ion-card-header (click)="openConfig(card)">
+                            Add a new Task
                         </ion-card-header>
                     </ion-card>
                 </ion-card-content>
