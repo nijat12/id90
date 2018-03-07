@@ -11,49 +11,35 @@
 
 
 <ion-content padding>
-    <form [formGroup]="editForm" (ngSubmit)="save(editForm.value)">
-        <!-- <ion-grid> -->
-        <!-- <ion-row> -->
-
-
-        <ion-card>
-            <ion-card-header>
-                Name of the Task
-            </ion-card-header>
-            <ion-card-content>
-                <ion-input type="text" fomrControlName="name"></ion-input>
-            </ion-card-content>
-        </ion-card>
-        <!-- </ion-row> -->
-        <!-- <ion-item> -->
-        <!-- <ion-row> -->
-
-        <ion-card>
-            <ion-card-header>
-                Urgency
-            </ion-card-header>
-            <!-- </ion-row> -->
-            <!-- <ion-row> -->
-            <ion-card-content>
-                <ion-segment>
-                    <ion-segment-button>
-                        <ion-icon name="star"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </ion-segment-button>
-                </ion-segment>
-                <!-- </ion-row> -->
-            </ion-card-content>
-            <!-- </ion-grid> -->
-        </ion-card>
-    </form>
+    <ion-card>
+        <ion-card-header>
+            Name of the Task
+        </ion-card-header>
+        <ion-card-content>
+            <ion-input type="text" [(ngModel)]="myParam.name"></ion-input>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            Importance
+        </ion-card-header>
+        <ion-card-content>
+            <ion-segment [(ngModel)]="myParam.importance">
+                <ion-segment-button value="1">
+                    <ion-icon name="star"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="2">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="3">
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                    <ion-icon name="star"></ion-icon>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-card-content>
+    </ion-card>
     <button ion-button color="primary" full (click)="save()">Save</button>
 
 </ion-content>

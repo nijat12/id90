@@ -62,7 +62,9 @@ export class HomePage implements OnInit {
   public openConfig(task: Task) {
     let modal = this.modalCtrl.create(EditModal, {'task': task});
     modal.onDidDismiss(data => {
-      console.log(data);
+      if(data) {
+        task = data;
+      }
     });
     modal.present();
   }
