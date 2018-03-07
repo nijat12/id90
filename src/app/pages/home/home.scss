@@ -7,6 +7,10 @@
     margin-top: 40px;
 }
 
+ion-slide.swiper-slide {
+    align-items: flex-start;
+}
+
 .gu-mirror {
     position: fixed !important;
     margin: 0 !important;

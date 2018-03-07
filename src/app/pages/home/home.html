@@ -7,8 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-    <ngu-carousel *ngIf="cards" [inputs]="carouselCards" (initData)="initDataFn($event)" (onMove)="tilesMoved($event)">
-        <ngu-item NguCarouselItem class="bannerStyle" *ngFor="let card of cards">
+    <ion-slides>
+        <ion-slide *ngFor="let card of cards">
             <ion-card>
                 <ion-card-header>
                     {{card.name}}
@@ -21,11 +21,6 @@
                     </ion-card>
                 </ion-card-content>
             </ion-card>
-        </ngu-item>
-
-        <!-- These needs to be present for the library to funciton properly -->
-        <button NguCarouselPrev [hidden]="true" class='leftRs'>&lt;</button>
-        <button NguCarouselNext [hidden]="true" class='rightRs'>&gt;</button>
-        <!--  -->
-    </ngu-carousel>
+        </ion-slide>
+    </ion-slides>
 </ion-content>
