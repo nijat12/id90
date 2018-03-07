@@ -14,6 +14,12 @@
                     {{card.name}}
                 </ion-card-header>
                 <ion-card-content [dragula]='card.name' [dragulaModel]='card.tasks'>
+                    <div class='left detector'>
+                        &nbsp;
+                    </div>
+                    <div class='right detector'>
+                        &nbsp;
+                    </div>
                     <ion-card *ngFor="let task of card.tasks">
                         <ion-card-header>
                             {{task.name}}

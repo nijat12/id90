@@ -4,7 +4,7 @@
 }
 
 .card {
-    margin-top: 40px;
+    // margin-top: 40px;
 }
 
 ion-slide.swiper-slide {
@@ -35,4 +35,21 @@ ion-slide.swiper-slide {
     opacity: 0.2;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     filter: alpha(opacity=20);
+}
+
+.detector {
+    position: fixed;
+    top: 0;
+    width: 30%;
+    height: 100%;
+    z-index: 10;
+    background: red;
+}
+
+.left.detector {
+    left: 0;
+}
+
+.right.detector {
+    right: 0;
 }
