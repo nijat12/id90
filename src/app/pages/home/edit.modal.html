@@ -1,0 +1,59 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">Close</button>
+        </ion-buttons>
+        <!-- <ion-title></ion-title> -->
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <form [formGroup]="editForm" (ngSubmit)="save(editForm.value)">
+        <!-- <ion-grid> -->
+        <!-- <ion-row> -->
+
+
+        <ion-card>
+            <ion-card-header>
+                Name of the Task
+            </ion-card-header>
+            <ion-card-content>
+                <ion-input type="text" fomrControlName="name"></ion-input>
+            </ion-card-content>
+        </ion-card>
+        <!-- </ion-row> -->
+        <!-- <ion-item> -->
+        <!-- <ion-row> -->
+
+        <ion-card>
+            <ion-card-header>
+                Urgency
+            </ion-card-header>
+            <!-- </ion-row> -->
+            <!-- <ion-row> -->
+            <ion-card-content>
+                <ion-segment>
+                    <ion-segment-button>
+                        <ion-icon name="star"></ion-icon>
+                    </ion-segment-button>
+                    <ion-segment-button>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </ion-segment-button>
+                    <ion-segment-button>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </ion-segment-button>
+                </ion-segment>
+                <!-- </ion-row> -->
+            </ion-card-content>
+            <!-- </ion-grid> -->
+        </ion-card>
+    </form>
+    <button ion-button color="primary" full (click)="save()">Save</button>
+
+</ion-content>

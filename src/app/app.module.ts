@@ -8,12 +8,14 @@ import { DragulaModule } from 'ng2-dragula';
 
 import { MyApp } from './app.component';
 import { HomePage } from './pages/home/home';
+import { EditModal } from './pages/home/edit.modal';
 import { cardService } from './services/card.service';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    EditModal
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { cardService } from './services/card.service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    EditModal
   ],
   providers: [
     StatusBar,

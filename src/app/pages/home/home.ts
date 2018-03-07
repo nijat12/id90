@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { DragulaService } from 'ng2-dragula';
+import { Hammer } from 'hammerjs';
 
 import { Card } from '../../models/card';
+import { Task } from '../../models/task';
 import { cardService } from '../../services/card.service';
+import { EditModal } from './edit.modal';
 
 @Component({
   selector: 'page-home',
@@ -15,6 +18,7 @@ export class HomePage implements OnInit {
 
   constructor(public navCtrl: NavController,
     private dragulaService: DragulaService,
+    public modalCtrl: ModalController,
     private CardService: cardService) {
       dragulaService.drag.subscribe((value) => {
         // console.log(`drag: ${value[0]}`);
@@ -25,7 +29,7 @@ export class HomePage implements OnInit {
         this.onDrop(value.slice(1));
       });
       dragulaService.over.subscribe((value) => {
-        // console.log(`over: ${value[0]}`);
+        // console.log(`over: ${value}`);
         this.onOver(value.slice(1));
       });
       dragulaService.out.subscribe((value) => {
@@ -35,7 +39,6 @@ export class HomePage implements OnInit {
   }
   private onDrag(args) {
     let [e, el] = args;
-    console.log(args);
     // do something
   }
   
@@ -51,7 +54,17 @@ export class HomePage implements OnInit {
   
   private onOut(args) {
     let [e, el, container] = args;
+    console.log(args);
+    // let hammer = new Hammer(e);
     // do something
+  }
+
+  public openConfig(task: Task) {
+    let modal = this.modalCtrl.create(EditModal, {'task': task});
+    modal.onDidDismiss(data => {
+      console.log(data);
+    });
+    modal.present();
   }
 
   ngOnInit() {
