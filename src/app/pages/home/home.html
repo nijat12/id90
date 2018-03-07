@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Task App for ID90
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ngu-carousel *ngIf="cards" [inputs]="carouselCards" (initData)="initDataFn($event)" (onMove)="tilesMoved($event)">
+        <ngu-item NguCarouselItem class="bannerStyle" *ngFor="let card of cards">
+            <ion-card>
+                <ion-card-header>
+                    {{card.name}}
+                </ion-card-header>
+                <ion-card-content [dragula]='card.name' [dragulaModel]='card.tasks'>
+                    <ion-card *ngFor="let task of card.tasks">
+                        <ion-card-header>
+                            {{task.name}}
+                        </ion-card-header>
+                    </ion-card>
+                </ion-card-content>
+            </ion-card>
+        </ngu-item>
+
+        <!-- These needs to be present for the library to funciton properly -->
+        <button NguCarouselPrev [hidden]="true" class='leftRs'>&lt;</button>
+        <button NguCarouselNext [hidden]="true" class='rightRs'>&gt;</button>
+        <!--  -->
+    </ngu-carousel>
+</ion-content>
