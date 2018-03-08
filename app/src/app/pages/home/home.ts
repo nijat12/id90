@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, ModalController, Slides } from 'ionic-angular';
 import _ from "lodash";
 import { DragulaService } from 'ng2-dragula';
+import 'rxjs/add/operator/map';
 // import { Hammer } from 'hammerjs';
 
 import { Card } from '../../models/card';
+import { Task } from '../../models/task';
 import { cardService } from '../../services/card.service';
 import { EditModal } from './edit.modal';
 
@@ -17,72 +19,85 @@ export class HomePage implements OnInit {
 
   cards: Card[];
   currentSlideTitle;
+  otherSlides: String[] = [];
   canAcess: boolean = true;
+  dragging: boolean = false;
+
+  toBin = {
+  }
 
   drgagulaOptions: any = {
     removeOnSpill: false,
     revertOnSpill: true
   }
 
-  // x: number = 0;
-  // y: number = 0;
-  // startX: number = 0;
-  // startY: number = 0;
-
-  // onPanStart(event: any): void {
-  //   event.preventDefault();
-  //   this.startX = this.x;
-  //   this.startY = this.y;
-  // }
-  // onPan(event: any): void {
-  //   event.preventDefault();
-  //   this.x = this.startX + event.deltaX;
-  //   this.y = this.startY + event.deltaY;
-  //   console.log(this.x + ' ' + this.y );
-  // }
-
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     private dragulaService: DragulaService,
     private CardService: cardService) {
 
-    // dragulaService.drag.subscribe((value) => {
-    //   // console.log(`drag: ${value[0]}`);
-    //   let [e, el] = value.slice(1);
-    //   this.slides.lockSwipes(true);
-
-    //   // var hammertime = new Hammer(e);
-    //   // hammertime.on('pan', function (ev) {
-    //   //   console.log(ev);
-    //   // });
-
-    // });
-    // dragulaService.drop.subscribe((value) => {
-    //   console.log(`drop: ${value[0]}`);
-    //   console.log(value);
-    //   let [e, el] = value.slice(1);
-    // });
+    dragulaService.drag.subscribe((value) => {
+      // console.log(`drag: ${value[0]}`);
+      let [e, el] = value.slice(1);
+      this.slides.lockSwipes(true);
+      this.dragging = true;
+    });
+    dragulaService.drop.subscribe((value) => {
+      // console.log(`drop: ${value[0]}`);
+      // console.log(value);
+      let [e, el] = value.slice(1);
+      // console.log(this.toBin);
+      this.moveTaskToBin();
+    });
+    dragulaService.dragend.subscribe((value) => {
+      // console.log(value);
+      this.dragging = false;
+    })
     // dragulaService.over.subscribe((value) => {
     //   // console.log(`over: ${value}`);
     //   let [e, el, container] = value.slice(1);
     // });
-    // dragulaService.out.subscribe((value) => {
-    //   // console.log(`out: ${value[0]}`);
-    //   let [e, el, container] = value.slice(1);
-    //   this.slides.lockSwipes(false);
-    //   this.canAcess = false;
-    //   setTimeout(() => {
-    //     this.canAcess = true
-    //   }, 300);
-    //   var rect = e.getBoundingClientRect();
-    //   // console.log(rect.top, rect.right, rect.bottom, rect.left);
-    // });
+    dragulaService.out.subscribe((value) => {
+      // console.log(`out: ${value[0]}`);
+      let [e, el, container] = value.slice(1);
+      this.slides.lockSwipes(false);
+      this.canAcess = false;
+      setTimeout(() => {
+        this.canAcess = true
+      }, 300);
+      // var rect = e.getBoundingClientRect();
+      // console.log(rect.top, rect.right, rect.bottom, rect.left);
+    });
+  }
+
+  moveTaskToBin() {
+    for (let bin in this.toBin) {
+      // console.log(;
+      this.cards.forEach(c => {
+        if (c.name === this.toBin[bin].name && this.toBin[bin].values.length>0) {
+          let task: Task = this.toBin[bin].values[0];
+          task.cardId = c.cardId;
+          this.updateTask(task).subscribe(task => {
+            c.tasks.push(task);
+            this.toBin[bin].values = [];
+          });
+        }
+      })
+    }
   }
 
   slideChanged() {
     let active = this.slides.getActiveIndex();
-    if (this.cards && this.cards[active] && this.cards[active].name)
-      this.currentSlideTitle = this.cards[active].name;
+    if (this.cards && this.cards[active] && this.cards[active].name) {
+      this.otherSlides = [];
+      this.cards.map((c, i) => {
+        this.toBin[c.name] = { name: c.name, values: [] };
+        if (i === active) this.currentSlideTitle = this.cards[active].name;
+        else {
+          this.otherSlides.push(c.name);
+        }
+      })
+    }
   }
 
   public openConfig(card: Card, index: number) {
@@ -95,13 +110,9 @@ export class HomePage implements OnInit {
           if (data !== 'Delete') {
             data.cardId = card.cardId;
             if (task) {
-              this.CardService.updateTaskToServer(data)
-                .subscribe(res => {
-                  if (res.success && res.success === 'ok') {
-                    card[index] = data;
-                    // this.getCards();
-                  }
-                })
+              this.updateTask(data).subscribe(task => {
+                card[index] = task
+              });
             }
             else this.saveNewTask(card, data);
           } else {
@@ -118,6 +129,17 @@ export class HomePage implements OnInit {
       modal.present();
     }
   }
+
+  updateTask(task) {
+    return this.CardService.updateTaskToServer(task)
+      .map(res => {
+        if (res.success && res.success === 'ok') {
+          return task;
+          // this.getCards();
+        }
+      })
+  }
+
   saveNewTask(card, data) {
     data.sort = card.tasks.length;
     this.CardService.saveTaskToServer(data)

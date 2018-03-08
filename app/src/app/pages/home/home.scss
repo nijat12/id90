@@ -127,6 +127,14 @@ ion-textarea {
     color: #90CAF9;
 }
 
+.buckets {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
+
 //////////////////////////////////////////////////////////////////////
 .ngx-dnd-container {
     background-color: rgba(255, 255, 255, 0.2);

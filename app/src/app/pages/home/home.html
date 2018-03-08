@@ -10,7 +10,7 @@
     <ion-slides (ionSlideDidChange)="slideChanged()">
         <ion-slide *ngFor="let card of cards">
             <ion-card class="main-card">
-                <ion-card-content class="tasks-container" [dragula]="card.tasks.sort" [dragulaOptions]="drgagulaOptions" [dragulaModel]='card.tasks'>
+                <ion-card-content class="tasks-container" [dragula]="card.name" [dragulaOptions]="drgagulaOptions" [dragulaModel]='card.tasks'>
                     <!-- <div class='left detector'>
                         &nbsp;
                     </div>
@@ -42,13 +42,19 @@
                             {{task.name}}
                         </ion-card-content>
                     </ion-card>
-                    <ion-card class="card-new">
-                        <ion-card-header (click)="openConfig(card)">
-                            Add a new Task
-                        </ion-card-header>
-                    </ion-card>
                 </ion-card-content>
+                <ion-card class="card-new">
+                    <ion-card-header (click)="openConfig(card)">
+                        Add a new Task
+                    </ion-card-header>
+                </ion-card>
             </ion-card>
+
+            <ion-row class="buckets" *ngIf="dragging">
+                <ion-col col-6 *ngFor="let bin of otherSlides">
+                    <button ion-button full [dragula]="card.name" [dragulaModel]='toBin[bin].values'>{{bin}}</button>
+                </ion-col>
+            </ion-row>
         </ion-slide>
     </ion-slides>
 </ion-content>
