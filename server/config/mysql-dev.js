@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
-module.exports = new Sequelize('id90', 'root', 'root', {
-    host: 'localhost',
+module.exports = new Sequelize('heroku_d2c2cc6ab1439cc', 'bd8ddbcc0517e8', '5b68c5c1', {
+    host: 'us-cdbr-iron-east-05.cleardb.net',
     dialect: 'mysql',
 
     pool: {

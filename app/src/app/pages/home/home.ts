@@ -86,7 +86,7 @@ export class HomePage implements OnInit {
     let elements = Array.from(container.children);
     let map = {}
     elements.forEach((e, i) => {
-      map[e.id] = i + 1;
+      map[e['id']] = i + 1;
     });
     this.cards[this.currentSlideIndex].tasks.forEach(task => {
       task.sort = map[task.taskId];
