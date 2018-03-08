@@ -17,86 +17,106 @@ export class HomePage implements OnInit {
 
   cards: Card[];
   currentSlideTitle;
+  canAcess: boolean = true;
+
+  drgagulaOptions: any = {
+    removeOnSpill: false,
+    revertOnSpill: true
+  }
+
+  // x: number = 0;
+  // y: number = 0;
+  // startX: number = 0;
+  // startY: number = 0;
+
+  // onPanStart(event: any): void {
+  //   event.preventDefault();
+  //   this.startX = this.x;
+  //   this.startY = this.y;
+  // }
+  // onPan(event: any): void {
+  //   event.preventDefault();
+  //   this.x = this.startX + event.deltaX;
+  //   this.y = this.startY + event.deltaY;
+  //   console.log(this.x + ' ' + this.y );
+  // }
 
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
     private dragulaService: DragulaService,
     private CardService: cardService) {
 
-    dragulaService.drag.subscribe((value) => {
-      // console.log(`drag: ${value[0]}`);
-      this.onDrag(value.slice(1));
-    });
-    dragulaService.drop.subscribe((value) => {
-      // console.log(`drop: ${value[0]}`);
-      this.onDrop(value.slice(1));
-    });
-    dragulaService.over.subscribe((value) => {
-      // console.log(`over: ${value}`);
-      this.onOver(value.slice(1));
-    });
-    dragulaService.out.subscribe((value) => {
-      // console.log(`out: ${value[0]}`);
-      this.onOut(value.slice(1));
-    });
-  }
-  private onDrag(args) {
-    let [e, el] = args;
-    // do something
-  }
+    // dragulaService.drag.subscribe((value) => {
+    //   // console.log(`drag: ${value[0]}`);
+    //   let [e, el] = value.slice(1);
+    //   this.slides.lockSwipes(true);
 
-  private onDrop(args) {
-    let [e, el] = args;
-    // do something
-  }
+    //   // var hammertime = new Hammer(e);
+    //   // hammertime.on('pan', function (ev) {
+    //   //   console.log(ev);
+    //   // });
 
-  private onOver(args) {
-    let [e, el, container] = args;
-    // do something
-  }
-
-  private onOut(args) {
-    let [e, el, container] = args;
-    console.log(args);
-    // let hammer = new Hammer(e);
-    // do something
+    // });
+    // dragulaService.drop.subscribe((value) => {
+    //   console.log(`drop: ${value[0]}`);
+    //   console.log(value);
+    //   let [e, el] = value.slice(1);
+    // });
+    // dragulaService.over.subscribe((value) => {
+    //   // console.log(`over: ${value}`);
+    //   let [e, el, container] = value.slice(1);
+    // });
+    // dragulaService.out.subscribe((value) => {
+    //   // console.log(`out: ${value[0]}`);
+    //   let [e, el, container] = value.slice(1);
+    //   this.slides.lockSwipes(false);
+    //   this.canAcess = false;
+    //   setTimeout(() => {
+    //     this.canAcess = true
+    //   }, 300);
+    //   var rect = e.getBoundingClientRect();
+    //   // console.log(rect.top, rect.right, rect.bottom, rect.left);
+    // });
   }
 
   slideChanged() {
     let active = this.slides.getActiveIndex();
-    this.currentSlideTitle = this.cards[active].name;
+    if (this.cards && this.cards[active] && this.cards[active].name)
+      this.currentSlideTitle = this.cards[active].name;
   }
 
   public openConfig(card: Card, index: number) {
-    let task;
-    if (index) task = card.tasks[index];
-    let modal = this.modalCtrl.create(EditModal, { 'task': task });
-    modal.onDidDismiss(data => {
-      if (data) {
-        if (data !== 'Delete') {
-          data.cardId = card.cardId;
-          if (task) {
-            this.CardService.updateTaskToServer(data)
+    if (this.canAcess) {
+      let task;
+      if (index) task = card.tasks[index];
+      let modal = this.modalCtrl.create(EditModal, { 'task': task });
+      modal.onDidDismiss(data => {
+        if (data) {
+          if (data !== 'Delete') {
+            data.cardId = card.cardId;
+            if (task) {
+              this.CardService.updateTaskToServer(data)
+                .subscribe(res => {
+                  if (res.success && res.success === 'ok') {
+                    card[index] = data;
+                    // this.getCards();
+                  }
+                })
+            }
+            else this.saveNewTask(card, data);
+          } else {
+            this.CardService.deleteTaskFromServer(task)
               .subscribe(res => {
                 if (res.success && res.success === 'ok') {
-                  card[index] = data;
+                  card.tasks.splice(index, 1);
                   // this.getCards();
                 }
               })
           }
-          else this.saveNewTask(card, data);
-        } else {
-          this.CardService.deleteTaskFromServer(task)
-            .subscribe(res => {
-              if (res.success && res.success === 'ok') {
-                card.tasks.splice(index, 1);
-                // this.getCards();
-              }
-            })
         }
-      }
-    });
-    modal.present();
+      });
+      modal.present();
+    }
   }
   saveNewTask(card, data) {
     data.sort = card.tasks.length;
