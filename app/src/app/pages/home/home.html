@@ -8,17 +8,10 @@
 
 <ion-content padding>
     <ion-slides (ionSlideDidChange)="slideChanged()">
-        <ion-slide *ngFor="let card of cards">
+        <ion-slide *ngFor="let card of cards" [ngClass]="{'allow-scroll':!dragging}">
             <ion-card class="main-card">
                 <ion-card-content class="tasks-container" [dragula]="card.name" [dragulaOptions]="drgagulaOptions" [dragulaModel]='card.tasks'>
-                    <!-- <div class='left detector'>
-                        &nbsp;
-                    </div>
-                    <div class='right detector'>
-                        &nbsp;
-                    </div> -->
-                    <ion-card class="tasks" *ngFor="let task of card.tasks; let i = index" (click)="openConfig(card, i)">
-                        <!-- <ion-card class="tasks" (panstart)="onPanStart($event)" (panmove)="onPan($event)" *ngFor="let task of card.tasks; let i = index" (click)="openConfig(card, i)"> -->
+                    <ion-card class="tasks" *ngFor="let task of card.tasks; let i = index" id="{{task.taskId}}" (click)="openConfig(card, i)">
                         <div class="corner-star" *ngIf="task">
                             <div *ngIf="task.importance==='1'">
                                 <ion-icon name="star"></ion-icon>
@@ -39,7 +32,7 @@
                             'second-level':task.importance === '2',
                             'third-level':task.importance === '3'
                           }">
-                            {{task.name}}
+                            {{task.name}} - {{task.sort}}
                         </ion-card-content>
                     </ion-card>
                 </ion-card-content>

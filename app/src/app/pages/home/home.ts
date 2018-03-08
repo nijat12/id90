@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
 
   cards: Card[];
   currentSlideTitle;
+  currentSlideIndex;
   otherSlides: String[] = [];
   canAcess: boolean = true;
   dragging: boolean = false;
@@ -44,10 +45,10 @@ export class HomePage implements OnInit {
     });
     dragulaService.drop.subscribe((value) => {
       // console.log(`drop: ${value[0]}`);
-      // console.log(value);
+      console.log(value);
       let [e, el] = value.slice(1);
-      // console.log(this.toBin);
       this.moveTaskToBin();
+      this.figureSorting(el);
     });
     dragulaService.dragend.subscribe((value) => {
       // console.log(value);
@@ -72,7 +73,6 @@ export class HomePage implements OnInit {
 
   moveTaskToBin() {
     for (let bin in this.toBin) {
-      // console.log(;
       this.cards.forEach(c => {
         if (c.name === this.toBin[bin].name && this.toBin[bin].values.length>0) {
           let task: Task = this.toBin[bin].values[0];
@@ -86,13 +86,35 @@ export class HomePage implements OnInit {
     }
   }
 
+  figureSorting(container) {
+    let elements = Array.from(container.children);
+    let map = {}
+    elements.forEach((e, i) => {
+      map[e.id] = i+1;
+    });
+    this.cards[this.currentSlideIndex].tasks.forEach(task =>{
+      task.sort = map[task.taskId];
+      task.cardId = this.cards[this.currentSlideIndex].cardId;
+    })
+    this.updateSorting();
+  }
+
+  updateSorting() {
+    this.CardService.updateAllTasks(this.cards[this.currentSlideIndex].tasks)
+    .subscribe(data => {
+      console.log(data);
+    })
+  }
+
   slideChanged() {
-    let active = this.slides.getActiveIndex();
-    if (this.cards && this.cards[active] && this.cards[active].name) {
+    this.currentSlideIndex = this.slides.getActiveIndex();
+    if (this.cards && this.cards[this.currentSlideIndex] && this.cards[this.currentSlideIndex].name) {
       this.otherSlides = [];
       this.cards.map((c, i) => {
         this.toBin[c.name] = { name: c.name, values: [] };
-        if (i === active) this.currentSlideTitle = this.cards[active].name;
+        if (i === this.currentSlideIndex) {
+          this.currentSlideTitle = this.cards[this.currentSlideIndex].name;
+        }
         else {
           this.otherSlides.push(c.name);
         }
@@ -163,7 +185,7 @@ export class HomePage implements OnInit {
   sortCards(cards) {
     this.cards = _.orderBy(cards, ['sort']);
     this.cards.map(card => {
-      card.tasks = _.orderBy(card.tasks, ['importance', 'sort'], ['desc', 'desc']);
+      card.tasks = _.orderBy(card.tasks, ['sort'], ['asc']);
     });
   }
 

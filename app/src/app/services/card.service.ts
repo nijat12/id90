@@ -65,6 +65,15 @@ export class cardService {
             });
     }
 
+    updateAllTasks(tasks: Task[]): Observable<any> {
+        return this.http.put(this.url + endPoints.allTasksInCard, JSON.stringify(tasks), { headers: this.headers })
+            .map(res => {
+                let data = res.json();
+                if (data.errorCode && data.errorCode !== 0) throw new Err(data);
+                else return data;
+            });
+    }
+
     deleteTaskFromServer(task: Task): Observable<any> {
         let search = new URLSearchParams();
         search.set('taskId', task.taskId);

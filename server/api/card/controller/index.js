@@ -43,6 +43,31 @@ function saveCard(req, res) {
     } else res.status(501).send('Did not recieve a payload');
 }
 
+function saveAll(req, res) {
+    if (req.body && req.body instanceof Array) {
+        let promises = [];
+        let body = req.body;
+        body.forEach(task => {
+            if (task.taskId) {
+                if (task.name) {
+                    if (task.sort && task.cardId && task.importance) {
+                        promises.push(new Promise((resolve, reject) => {
+                            Task.update(task, { where: { taskId: task.taskId } })
+                                .then(result => {
+                                    resolve();
+                                })
+                        }));
+                    } else res.status(503).send('Did not recieve a necessary parameters for Task');
+                } else res.status(502).send('Did not recieve a name for the Task');
+            } else res.status(505).send('Did not recieve an id for the Task');
+        });
+        Promise.all(promises).then(val => {
+            res.json({ 'success': 'ok' });
+        })
+    } else res.status(501).send('Did not recieve a payload');
+
+}
+
 function deleteCard(req, res) {
     if (req.query) {
         if (req.query.taskId) {
@@ -60,5 +85,6 @@ module.exports = {
     getCards: getCards,
     createCard: createCard,
     saveCard: saveCard,
+    saveAll: saveAll,
     deleteCard: deleteCard
 };
