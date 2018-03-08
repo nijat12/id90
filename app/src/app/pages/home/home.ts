@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController, ModalController, Slides } from 'ionic-angular';
-import { DragulaService } from 'ng2-dragula';
 import _ from "lodash";
+import { DragulaService } from 'ng2-dragula';
 // import { Hammer } from 'hammerjs';
 
 import { Card } from '../../models/card';
-import { Task } from '../../models/task';
 import { cardService } from '../../services/card.service';
 import { EditModal } from './edit.modal';
 
@@ -21,47 +20,47 @@ export class HomePage implements OnInit {
 
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
-    // private dragulaService: DragulaService,
+    private dragulaService: DragulaService,
     private CardService: cardService) {
 
-    // dragulaService.drag.subscribe((value) => {
-    //   // console.log(`drag: ${value[0]}`);
-    //   this.onDrag(value.slice(1));
-    // });
-    // dragulaService.drop.subscribe((value) => {
-    //   // console.log(`drop: ${value[0]}`);
-    //   this.onDrop(value.slice(1));
-    // });
-    // dragulaService.over.subscribe((value) => {
-    //   // console.log(`over: ${value}`);
-    //   this.onOver(value.slice(1));
-    // });
-    // dragulaService.out.subscribe((value) => {
-    //   // console.log(`out: ${value[0]}`);
-    //   this.onOut(value.slice(1));
-    // });
+    dragulaService.drag.subscribe((value) => {
+      // console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+      // console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+    });
+    dragulaService.over.subscribe((value) => {
+      // console.log(`over: ${value}`);
+      this.onOver(value.slice(1));
+    });
+    dragulaService.out.subscribe((value) => {
+      // console.log(`out: ${value[0]}`);
+      this.onOut(value.slice(1));
+    });
   }
-  // private onDrag(args) {
-  //   let [e, el] = args;
-  //   // do something
-  // }
+  private onDrag(args) {
+    let [e, el] = args;
+    // do something
+  }
 
-  // private onDrop(args) {
-  //   let [e, el] = args;
-  //   // do something
-  // }
+  private onDrop(args) {
+    let [e, el] = args;
+    // do something
+  }
 
-  // private onOver(args) {
-  //   let [e, el, container] = args;
-  //   // do something
-  // }
+  private onOver(args) {
+    let [e, el, container] = args;
+    // do something
+  }
 
-  // private onOut(args) {
-  //   let [e, el, container] = args;
-  //   console.log(args);
-  //   // let hammer = new Hammer(e);
-  //   // do something
-  // }
+  private onOut(args) {
+    let [e, el, container] = args;
+    console.log(args);
+    // let hammer = new Hammer(e);
+    // do something
+  }
 
   slideChanged() {
     let active = this.slides.getActiveIndex();
@@ -114,7 +113,6 @@ export class HomePage implements OnInit {
       .subscribe(cards => {
         this.cards = null;
         this.sortCards(cards);
-        console.log(cards);
       }, error => {
         console.log(error);
       })

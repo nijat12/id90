@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
-import { DndModule } from 'ng2-dnd';
 import { DragulaModule } from 'ng2-dragula';
 
 import { DirectivesModule } from '../directives/directives.module';
@@ -23,7 +22,6 @@ import { cardService } from './services/card.service';
   imports: [
     BrowserModule,
     DirectivesModule,
-    DndModule.forRoot(),
     DragulaModule,
     HttpModule,
     IonicModule.forRoot(MyApp)

@@ -1,4 +1,4 @@
-// import 'hammerjs';
+import 'hammerjs';
 // import 'hammer-timejs';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
