@@ -4,7 +4,7 @@ export class Task {
     sort: number;
     importance: string  = '1';
     description: string = '';
-    dueDate: string;
+    dueDate: Date;
     cardId: string;
 
     constructor(json: any){

@@ -7,6 +7,11 @@ ion-slide.allow-scroll {
     overflow: scroll;
 }
 
+.date ion-col {
+    text-align: right;
+    font-size: 0.8em;
+}
+
 .scroll-content {
     margin-top: 20px!important;
 }
@@ -54,6 +59,11 @@ ion-slide.allow-scroll {
     background: #F5F5F5;
     -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.tasks.overdue {
+    -webkit-box-shadow: 0 5px 5px rgba(255, 0, 0, 0.3);
+    box-shadow: 0 5px 5px rgba(255, 0, 0, 0.3);
 }
 
 .task-notes {

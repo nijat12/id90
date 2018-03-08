@@ -74,7 +74,7 @@ export class HomePage implements OnInit {
   moveTaskToBin() {
     for (let bin in this.toBin) {
       this.cards.forEach(c => {
-        if (c.name === this.toBin[bin].name && this.toBin[bin].values.length>0) {
+        if (c.name === this.toBin[bin].name && this.toBin[bin].values.length > 0) {
           let task: Task = this.toBin[bin].values[0];
           task.cardId = c.cardId;
           this.updateTask(task).subscribe(task => {
@@ -90,9 +90,9 @@ export class HomePage implements OnInit {
     let elements = Array.from(container.children);
     let map = {}
     elements.forEach((e, i) => {
-      map[e.id] = i+1;
+      map[e.id] = i + 1;
     });
-    this.cards[this.currentSlideIndex].tasks.forEach(task =>{
+    this.cards[this.currentSlideIndex].tasks.forEach(task => {
       task.sort = map[task.taskId];
       task.cardId = this.cards[this.currentSlideIndex].cardId;
     })
@@ -101,9 +101,23 @@ export class HomePage implements OnInit {
 
   updateSorting() {
     this.CardService.updateAllTasks(this.cards[this.currentSlideIndex].tasks)
-    .subscribe(data => {
-      console.log(data);
-    })
+      .subscribe(data => {
+        console.log(data);
+      })
+  }
+
+  ifWithinADay(task) {
+    let rtnVal = false;
+    if (task && task.dueDate !== undefined) {
+      let tomorrow = new Date();
+      let due = new Date(task.dueDate)
+      tomorrow.setDate(tomorrow.getDay()) + 1;
+      due.setDate(due.getDay()) + 1;
+      if (tomorrow > due) {
+        rtnVal = true;
+      }
+    } 
+    return rtnVal;
   }
 
   slideChanged() {
