@@ -57,7 +57,10 @@ function saveAll(req, res) {
                                     resolve();
                                 })
                         }));
-                    } else res.status(503).send('Did not recieve a necessary parameters for Task');
+                    } else {
+                        let string = 'Did not recieve a necessary parameters for Task ' + task.taskId;
+                        res.status(503).send(string);
+                    }
                 } else res.status(502).send('Did not recieve a name for the Task');
             } else res.status(505).send('Did not recieve an id for the Task');
         });

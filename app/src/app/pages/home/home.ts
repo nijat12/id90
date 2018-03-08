@@ -42,9 +42,9 @@ export class HomePage implements OnInit {
       this.dragging = true;
     });
     this.dragulaService.drop.subscribe((value) => {
-      let el = value.slice(1)[1];
+      let [e, el, content] = value.slice(1);
       this.moveTaskToBin();
-      this.figureSorting(el);
+      this.figureSorting(content);
     });
     this.dragulaService.dragend.subscribe((value) => {
       this.dragging = false;
@@ -66,12 +66,21 @@ export class HomePage implements OnInit {
           task.cardId = c.cardId;
           this.updateTask(task).subscribe(task => {
             c.tasks.push(task);
+            this.assignSorting(c);
             this.toBin[bin].values = [];
           });
         }
       })
     }
   }
+
+  assignSorting (card: Card){
+    card.tasks.forEach((task, i) => {
+      task.sort = i+1;
+      task.cardId = card.cardId;
+    });
+    this.updateSorting(card);
+  };
 
   figureSorting(container) {
     let elements = Array.from(container.children);
@@ -83,11 +92,11 @@ export class HomePage implements OnInit {
       task.sort = map[task.taskId];
       task.cardId = this.cards[this.currentSlideIndex].cardId;
     })
-    this.updateSorting();
+    this.updateSorting(this.cards[this.currentSlideIndex]);
   }
 
-  updateSorting() {
-    this.CardService.updateAllTasks(this.cards[this.currentSlideIndex].tasks)
+  updateSorting(card: Card) {
+    this.CardService.updateAllTasks(card.tasks)
       .subscribe(data => {
       })
   }
