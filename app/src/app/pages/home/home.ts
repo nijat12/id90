@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from 'ionic-angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController, ModalController, Slides } from 'ionic-angular';
 import { DragulaService } from 'ng2-dragula';
 import _ from "lodash";
 // import { Hammer } from 'hammerjs';
@@ -14,8 +14,10 @@ import { EditModal } from './edit.modal';
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit {
+  @ViewChild(Slides) slides: Slides;
 
   cards: Card[];
+  currentSlideTitle;
 
   constructor(public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -61,8 +63,14 @@ export class HomePage implements OnInit {
   //   // do something
   // }
 
+  slideChanged() {
+    let active = this.slides.getActiveIndex();
+    this.currentSlideTitle = this.cards[active].name;
+  }
+
   public openConfig(card: Card, index: number) {
-    let task = card.tasks[index];
+    let task;
+    if (index) task = card.tasks[index];
     let modal = this.modalCtrl.create(EditModal, { 'task': task });
     modal.onDidDismiss(data => {
       if (data) {
@@ -72,8 +80,8 @@ export class HomePage implements OnInit {
             this.CardService.updateTaskToServer(data)
               .subscribe(res => {
                 if (res.success && res.success === 'ok') {
-                  task = data;
-                  this.getCards();
+                  card[index] = data;
+                  // this.getCards();
                 }
               })
           }
@@ -83,7 +91,7 @@ export class HomePage implements OnInit {
             .subscribe(res => {
               if (res.success && res.success === 'ok') {
                 card.tasks.splice(index, 1);
-                this.getCards();
+                // this.getCards();
               }
             })
         }
@@ -97,6 +105,7 @@ export class HomePage implements OnInit {
       .subscribe(res => {
         if (res && res.taskId) {
           card.tasks.push(res);
+          // this.sortCards(this.cards);
         }
       })
   }
@@ -104,17 +113,25 @@ export class HomePage implements OnInit {
     this.CardService.getCardsFromServer()
       .subscribe(cards => {
         this.cards = null;
-        this.cards = _.orderBy(cards, ['sort']);
-        this.cards.map(card => {
-          card.tasks = _.orderBy(card.tasks, ['importance', 'sort'], ['desc', 'desc']);
-        })
+        this.sortCards(cards);
         console.log(cards);
       }, error => {
         console.log(error);
       })
   }
 
+  sortCards(cards) {
+    this.cards = _.orderBy(cards, ['sort']);
+    this.cards.map(card => {
+      card.tasks = _.orderBy(card.tasks, ['importance', 'sort'], ['desc', 'desc']);
+    });
+  }
+
   ngOnInit() {
     this.getCards();
+  }
+
+  ionViewDidEnter() {
+    this.slideChanged();
   }
 }

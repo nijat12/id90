@@ -1,19 +1,16 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Task App for ID90
+            {{currentSlideTitle}}
         </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-    <ion-slides>
+    <ion-slides (ionSlideDidChange)="slideChanged()">
         <ion-slide *ngFor="let card of cards">
             <ion-card class="main-card">
-                <ion-card-header>
-                    <div class="card-label">{{card.name}}</div>
-                </ion-card-header>
-                <ion-card-content dnd-sortable-container [sortableData]="card.tasks">
+                <ion-card-content class="tasks-container" dnd-sortable-container [sortableData]="card.tasks">
                     <!-- <ion-card-content [dragula]='card.name' [dragulaModel]='card.tasks'> -->
                     <!-- <div class='left detector'>
                         &nbsp;
@@ -23,6 +20,21 @@
                     </div> -->
                     <!-- <ion-card *ngFor="let task of card.tasks; let i = index" (click)="openConfig(card, i)"> -->
                     <ion-card class="tasks" *ngFor="let task of card.tasks; let i = index" dnd-sortable [sortableIndex]="i" (click)="openConfig(card, i)">
+                        <div class="corner-star">
+                            <div *ngIf="task.importance==='1'">
+                                <ion-icon name="star"></ion-icon>
+                            </div>
+                            <div *ngIf="task.importance==='2'">
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                            </div>
+                            <div *ngIf="task.importance==='3'">
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                                <ion-icon name="star"></ion-icon>
+                            </div>
+                        </div>
+
                         <ion-card-content class="task-notes" [ngClass]="{
                             'first-level':task.importance === '1',
                             'second-level':task.importance === '2',

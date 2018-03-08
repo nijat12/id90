@@ -3,6 +3,14 @@
     background: #E3F2FD;
 }
 
+ion-slide {
+    overflow: scroll;
+}
+
+.scroll-content {
+    margin-top: 20px!important;
+}
+
 .toolbar-background {
     border-width: 0 0 0!important;
 }
@@ -128,4 +136,19 @@ ion-textarea {
 
 .modal-container .card-header {
     padding: 10px 16px 0 16px;
+}
+
+.corner-star {
+    margin-right: 5px;
+    float: right;
+}
+
+.corner-star div,
+.fotnote {
+    text-align: right;
+}
+
+.corner-star .icon {
+    font-size: 0.9em;
+    color: #90CAF9;
 }

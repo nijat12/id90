@@ -13,8 +13,8 @@ export class EditModal {
     constructor(
         public viewCtrl: ViewController,
         private params: NavParams) {
-        this.myParam = new Task(params.get('task'));
-        if(!this.myParam) this.myParam = new Task({});
+            if(params.get('task')) this.myParam = new Task(params.get('task'));
+            else this.myParam = new Task({});
     }
 
     dismiss() {

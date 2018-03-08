@@ -1,15 +1,10 @@
 <ion-header>
-
     <ion-navbar>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">Close</button>
         </ion-buttons>
-        <!-- <ion-title></ion-title> -->
     </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding class="modal-container">
     <ion-card>
         <ion-card-header>
@@ -17,7 +12,9 @@
         </ion-card-header>
         <ion-card-content>
             <ion-textarea placeholder="Add a name" autosize type="text" [(ngModel)]="myParam.name"></ion-textarea>
-            <small class="form-text text-muted"><code>{{myParam.name.length}} </code> of <code> 1,000</code></small>
+            <div class="fotnote">
+                <small class="form-text text-muted"><code>{{myParam.name.length}} </code> of <code> 1,000</code></small>
+            </div>
         </ion-card-content>
     </ion-card>
 
@@ -27,7 +24,9 @@
         </ion-card-header>
         <ion-card-content>
             <ion-textarea placeholder="Add a description" autosize type="text" [(ngModel)]="myParam.description"></ion-textarea>
-            <small class="form-text text-muted"><code>{{myParam.description.length ? myParam.description.length : 0}} </code> of <code> 1,000</code></small>
+            <div class="fotnote">
+                <small class="form-text text-muted"><code>{{myParam.description.length ? myParam.description.length : 0}} </code> of <code> 1,000</code></small>
+            </div>
         </ion-card-content>
     </ion-card>
 
