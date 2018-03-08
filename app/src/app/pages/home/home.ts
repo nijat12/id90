@@ -37,36 +37,24 @@ export class HomePage implements OnInit {
     private dragulaService: DragulaService,
     private CardService: cardService) {
 
-    dragulaService.drag.subscribe((value) => {
-      // console.log(`drag: ${value[0]}`);
-      let [e, el] = value.slice(1);
+    this.dragulaService.drag.subscribe((value) => {
       this.slides.lockSwipes(true);
       this.dragging = true;
     });
-    dragulaService.drop.subscribe((value) => {
-      // console.log(`drop: ${value[0]}`);
-      let [e, el] = value.slice(1);
+    this.dragulaService.drop.subscribe((value) => {
+      let el = value.slice(1)[1];
       this.moveTaskToBin();
       this.figureSorting(el);
     });
-    dragulaService.dragend.subscribe((value) => {
-      // console.log(value);
+    this.dragulaService.dragend.subscribe((value) => {
       this.dragging = false;
     })
-    // dragulaService.over.subscribe((value) => {
-    //   // console.log(`over: ${value}`);
-    //   let [e, el, container] = value.slice(1);
-    // });
-    dragulaService.out.subscribe((value) => {
-      // console.log(`out: ${value[0]}`);
-      let [e, el, container] = value.slice(1);
+    this.dragulaService.out.subscribe((value) => {
       this.slides.lockSwipes(false);
       this.canAcess = false;
       setTimeout(() => {
         this.canAcess = true
       }, 300);
-      // var rect = e.getBoundingClientRect();
-      // console.log(rect.top, rect.right, rect.bottom, rect.left);
     });
   }
 
