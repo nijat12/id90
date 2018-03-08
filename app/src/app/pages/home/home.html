@@ -11,7 +11,7 @@
         <ion-slide *ngFor="let card of cards" [ngClass]="{'allow-scroll':!dragging}">
             <ion-card class="main-card">
                 <ion-card-content class="tasks-container" [dragula]="card.name" [dragulaOptions]="drgagulaOptions" [dragulaModel]='card.tasks'>
-                    <ion-card class="tasks" [ngClass]="{'overdue': ifWithinADay(task)}" *ngFor="let task of card.tasks; let i = index" id="{{task.taskId}}" (click)="openConfig(card, i)">
+                    <ion-card class="tasks" [ngClass]="{'overdue': ifWithinADay(task)}" delayDragLift *ngFor="let task of card.tasks; let i = index" id="{{task.taskId}}" (click)="openConfig(card, i)">
                         <div class="corner-star" *ngIf="task">
                             <div *ngIf="task.importance==='1'">
                                 <ion-icon name="star"></ion-icon>
@@ -32,7 +32,7 @@
                             'second-level':task.importance === '2',
                             'third-level':task.importance === '3'
                           }">
-                            {{task.name}} - {{task.sort}}
+                            {{task.name}}
                         </ion-card-content>
                         <ion-row class="date" *ngIf="task.dueDate">
                             <ion-col col-6 offset-6>

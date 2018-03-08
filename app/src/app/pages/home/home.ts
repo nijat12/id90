@@ -45,7 +45,6 @@ export class HomePage implements OnInit {
     });
     dragulaService.drop.subscribe((value) => {
       // console.log(`drop: ${value[0]}`);
-      console.log(value);
       let [e, el] = value.slice(1);
       this.moveTaskToBin();
       this.figureSorting(el);
@@ -102,7 +101,6 @@ export class HomePage implements OnInit {
   updateSorting() {
     this.CardService.updateAllTasks(this.cards[this.currentSlideIndex].tasks)
       .subscribe(data => {
-        console.log(data);
       })
   }
 
@@ -110,8 +108,8 @@ export class HomePage implements OnInit {
     let rtnVal = false;
     if (task && task.dueDate !== undefined) {
       let tomorrow = new Date();
-      let due = new Date(task.dueDate)
       tomorrow.setDate(tomorrow.getDay()) + 1;
+      let due = new Date(task.dueDate);
       due.setDate(due.getDay()) + 1;
       if (tomorrow > due) {
         rtnVal = true;
