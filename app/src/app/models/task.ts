@@ -1,13 +1,19 @@
 export class Task {
     taskId: string;
-    name: string;
+    name: string = '';
     sort: number;
-    importance: number;
+    importance: string  = '1';
+    description: string = '';
+    dueDate: string;
+    cardId: string;
 
     constructor(json: any){
         this.name = json.name || '';
         this.sort = json.sort || '';
-        this.importance = json.importance || '';
+        this.importance = json.importance || '1';
+        this.description = json.description || '';
         if(json.taskId) this.taskId = json.taskId;
+        if(json.cardId) this.cardId = json.cardId;
+        if(json.dueDate) this.dueDate = json.dueDate;
     }
 }

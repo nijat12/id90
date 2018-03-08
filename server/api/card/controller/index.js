@@ -7,7 +7,7 @@ function getCards(req, res) {
         attributes: ['cardId', 'name', 'sort'],
         include: [{
             model: Task,
-            attributes: ['name', 'taskId', 'importance', 'sort']
+            attributes: ['name', 'taskId', 'importance', 'sort', 'description', 'dueDate']
         }]
     }).then(card => {
         res.json(card);
@@ -20,7 +20,7 @@ function createCard(req, res) {
         if (body.name) {
             if (body.sort && body.cardId && body.importance) {
                 Task.create(body).then(result => {
-                    res.json({ 'success': 'ok' });
+                    res.json(result);
                 })
             } else res.status(503).send('Did not recieve a necessary parameters for Task');
         } else res.status(502).send('Did not recieve a name for the Task');

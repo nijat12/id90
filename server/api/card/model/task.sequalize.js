@@ -6,11 +6,14 @@ const Card = require('./card.sequalize');
 const Task = sequelize.define('task', {
     taskId: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     name: Sequelize.STRING,
     importance: Sequelize.STRING,
     sort: Sequelize.INTEGER,
+    description: Sequelize.STRING,
+    dueDate: Sequelize.DATE,
     cardId: {
         type: Sequelize.INTEGER,
         references: 'cards',
@@ -23,7 +26,9 @@ module.exports = Task;
 // id90
 // tasks table
 //
-// name varchar(255)
+// name varchar(1000)
+// description varchar(1000)
+// dueDate TIMESTAMP
 // sort INT(10)
 // importance varchar(255)
 // taskId int NOT NULL AUTO_INCREMENT

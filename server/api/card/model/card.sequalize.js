@@ -6,6 +6,7 @@ const Task = require('./task.sequalize');
 const Card = sequelize.define('card', {
     cardId: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     name: Sequelize.STRING,

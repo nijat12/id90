@@ -9,25 +9,29 @@
 <ion-content padding>
     <ion-slides>
         <ion-slide *ngFor="let card of cards">
-            <ion-card>
+            <ion-card class="main-card">
                 <ion-card-header>
-                    {{card.name}}
+                    <div class="card-label">{{card.name}}</div>
                 </ion-card-header>
                 <ion-card-content dnd-sortable-container [sortableData]="card.tasks">
                     <!-- <ion-card-content [dragula]='card.name' [dragulaModel]='card.tasks'> -->
-                    <div class='left detector'>
+                    <!-- <div class='left detector'>
                         &nbsp;
                     </div>
                     <div class='right detector'>
                         &nbsp;
-                    </div>
+                    </div> -->
                     <!-- <ion-card *ngFor="let task of card.tasks; let i = index" (click)="openConfig(card, i)"> -->
-                    <ion-card *ngFor="let task of card.tasks; let i = index" dnd-sortable [sortableIndex]="i" (click)="openConfig(card, i)">
-                        <ion-card-header>
+                    <ion-card class="tasks" *ngFor="let task of card.tasks; let i = index" dnd-sortable [sortableIndex]="i" (click)="openConfig(card, i)">
+                        <ion-card-content class="task-notes" [ngClass]="{
+                            'first-level':task.importance === '1',
+                            'second-level':task.importance === '2',
+                            'third-level':task.importance === '3'
+                          }">
                             {{task.name}}
-                        </ion-card-header>
+                        </ion-card-content>
                     </ion-card>
-                    <ion-card>
+                    <ion-card class="card-new">
                         <ion-card-header (click)="openConfig(card)">
                             Add a new Task
                         </ion-card-header>

@@ -1,10 +1,57 @@
 .scroll-content,
 .toolbar-background {
-    background: #9FA8DA;
+    background: #E3F2FD;
 }
 
-.card {
-    // margin-top: 40px;
+.toolbar-background {
+    border-width: 0 0 0!important;
+}
+
+.toolbar-title {
+    font-size: 1.6em;
+    font-weight: normal;
+}
+
+.main-card .card-header {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.card-label {
+    font-size: 1em;
+    font-weight: bold;
+    border-bottom: #ddd 1px solid;
+    padding-bottom: 15px;
+}
+
+.card-new {
+    border-radius: 0;
+    background: #fff;
+    -webkit-box-shadow: 0!important;
+    box-shadow: 0 0 0 !important;
+    margin: 0;
+    width: 100%;
+}
+
+.main-card {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
+.tasks {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    background: #F5F5F5;
+    -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+}
+
+.task-notes {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 ion-slide.swiper-slide {
@@ -52,4 +99,33 @@ ion-slide.swiper-slide {
 
 .right.detector {
     right: 0;
+}
+
+ion-textarea {
+    resize: both;
+}
+
+.third-level {
+    font-size: 1.6em;
+}
+
+.second-level {
+    font-size: 1.3em;
+}
+
+.first-level {
+    font-size: 1em;
+}
+
+.date-time .item {
+    padding-left: 0;
+}
+
+.date-time .item .datetime {
+    width: 100%;
+    text-align: center;
+}
+
+.modal-container .card-header {
+    padding: 10px 16px 0 16px;
 }

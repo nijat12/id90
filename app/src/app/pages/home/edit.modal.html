@@ -10,15 +10,38 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="modal-container">
     <ion-card>
         <ion-card-header>
             Name of the Task
         </ion-card-header>
         <ion-card-content>
-            <ion-input type="text" [(ngModel)]="myParam.name"></ion-input>
+            <ion-textarea placeholder="Add a name" autosize type="text" [(ngModel)]="myParam.name"></ion-textarea>
+            <small class="form-text text-muted"><code>{{myParam.name.length}} </code> of <code> 1,000</code></small>
         </ion-card-content>
     </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            Description
+        </ion-card-header>
+        <ion-card-content>
+            <ion-textarea placeholder="Add a description" autosize type="text" [(ngModel)]="myParam.description"></ion-textarea>
+            <small class="form-text text-muted"><code>{{myParam.description.length ? myParam.description.length : 0}} </code> of <code> 1,000</code></small>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header>
+            Due Date
+        </ion-card-header>
+        <ion-card-content class="date-time">
+            <ion-item>
+                <ion-datetime placeholder="Select Date" displayFormat="MMM DD YYYY - H:mm" [(ngModel)]="myParam.dueDate"></ion-datetime>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+
     <ion-card>
         <ion-card-header>
             Importance

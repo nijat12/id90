@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { DragulaService } from 'ng2-dragula';
+import _ from "lodash";
 // import { Hammer } from 'hammerjs';
 
 import { Card } from '../../models/card';
@@ -66,30 +67,54 @@ export class HomePage implements OnInit {
     modal.onDidDismiss(data => {
       if (data) {
         if (data !== 'Delete') {
-          if (task) task = data;
+          data.cardId = card.cardId;
+          if (task) {
+            this.CardService.updateTaskToServer(data)
+              .subscribe(res => {
+                if (res.success && res.success === 'ok') {
+                  task = data;
+                  this.getCards();
+                }
+              })
+          }
           else this.saveNewTask(card, data);
         } else {
           this.CardService.deleteTaskFromServer(task)
-          .subscribe(res => {
-            if(res.success && res.success==='ok') card.tasks.splice(index,1);
-          })
+            .subscribe(res => {
+              if (res.success && res.success === 'ok') {
+                card.tasks.splice(index, 1);
+                this.getCards();
+              }
+            })
         }
       }
     });
     modal.present();
   }
-
   saveNewTask(card, data) {
-    card.tasks.push(data);
+    data.sort = card.tasks.length;
+    this.CardService.saveTaskToServer(data)
+      .subscribe(res => {
+        if (res && res.taskId) {
+          card.tasks.push(res);
+        }
+      })
   }
-
-  ngOnInit() {
+  getCards() {
     this.CardService.getCardsFromServer()
       .subscribe(cards => {
-        this.cards = cards;
+        this.cards = null;
+        this.cards = _.orderBy(cards, ['sort']);
+        this.cards.map(card => {
+          card.tasks = _.orderBy(card.tasks, ['importance', 'sort'], ['desc', 'desc']);
+        })
         console.log(cards);
       }, error => {
         console.log(error);
       })
+  }
+
+  ngOnInit() {
+    this.getCards();
   }
 }
