@@ -21,7 +21,8 @@
                     <div class='right detector'>
                         &nbsp;
                     </div>
-                    <ion-card *ngFor="let task of card.tasks; let i = index" dnd-sortable [sortableIndex]="i" (click)="openConfig(card, task)">
+                    <!-- <ion-card *ngFor="let task of card.tasks; let i = index" (click)="openConfig(card, i)"> -->
+                    <ion-card *ngFor="let task of card.tasks; let i = index" dnd-sortable [sortableIndex]="i" (click)="openConfig(card, i)">
                         <ion-card-header>
                             {{task.name}}
                         </ion-card-header>

@@ -26,11 +26,11 @@ module.exports = Task;
 // name varchar(255)
 // sort INT(10)
 // importance varchar(255)
-// taskId int NOT NULL AUTO_INCREMENT;
-// updatedAt TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW();
-// createdAt TIMESTAMP NOT NULL;
+// taskId int NOT NULL AUTO_INCREMENT
+// updatedAt TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW()
+// createdAt TIMESTAMP NOT NULL
 // cardId int
-// PRIMARY KEY(taskId);
+// PRIMARY KEY(taskId)
 //
 // INSERT INTO tasks (taskId, name, sort, importance, cardId)
 // VALUES (1, 'Task1', 1, '1', 1),

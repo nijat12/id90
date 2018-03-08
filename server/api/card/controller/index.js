@@ -19,7 +19,6 @@ function createCard(req, res) {
     if (req.body) {
         if (body.name) {
             if (body.sort && body.cardId && body.importance) {
-                //create a new
                 Task.create(body).then(result => {
                     res.json({ 'success': 'ok' });
                 })
@@ -45,11 +44,11 @@ function saveCard(req, res) {
 }
 
 function deleteCard(req, res) {
-    let body = req.body;
-    if (req.body) {
-        if (body.taskId) {
+    if (req.query) {
+        if (req.query.taskId) {
+            let id = req.query.taskId;
             Task.destroy({
-                where: { taskId: body.taskId }
+                where: { taskId: id }
             }).then(result => {
                 res.json({ 'success': 'ok' });
             })

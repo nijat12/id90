@@ -1,5 +1,5 @@
 export class Task {
-    id: string;
+    taskId: string;
     name: string;
     sort: number;
     importance: number;
@@ -8,6 +8,6 @@ export class Task {
         this.name = json.name || '';
         this.sort = json.sort || '';
         this.importance = json.importance || '';
-        if(json.taskId) this.id = json.taskId;
+        if(json.taskId) this.taskId = json.taskId;
     }
 }

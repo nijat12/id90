@@ -24,4 +24,8 @@ export class EditModal {
     save() {
         this.viewCtrl.dismiss(this.myParam);
     }
+
+    deleteTask() {
+        this.viewCtrl.dismiss('Delete');
+    }
 }
