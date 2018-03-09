@@ -90,6 +90,21 @@ npm install
 npm start
 ```
 
-### To view the deployed version
-If you would rather see the live demo then you can
+### Deployed instances
+Back-end application has been deployed to Heroku to make testing the front end application easier.
+Endpoint is located inside:
+```
+app/src/app/resources/endPoints.ts
+```
+There are also commented endpoints pointing to Apiary amd localhost that I have used for local development
 
+MySQL database connection is defined inside:
+```
+server/config/mysql-dev.js
+```
+It is pointing to ClearDB instance in Heroku with some sample data.
+You can run
+```
+ionic serve
+```
+Inside app/ directory and it will pull the data from Heroku.
