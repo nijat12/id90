@@ -134,7 +134,7 @@ export class HomePage implements OnInit {
   public openConfig(card: Card, index: number) {
     if (this.canAcess) {
       let task;
-      if (index) task = card.tasks[index];
+      if (index!==null) task = card.tasks[index];
       let modal = this.modalCtrl.create(EditModal, { 'task': task });
       modal.onDidDismiss(data => {
         if (data) {
@@ -142,7 +142,7 @@ export class HomePage implements OnInit {
             data.cardId = card.cardId;
             if (task) {
               this.updateTask(data).subscribe(task => {
-                card[index] = task
+                card.tasks[index] = task
               });
             }
             else this.saveNewTask(card, data);
@@ -172,7 +172,7 @@ export class HomePage implements OnInit {
   }
 
   saveNewTask(card, data) {
-    data.sort = card.tasks.length;
+    data.sort = card.tasks.length+1;
     this.CardService.saveTaskToServer(data)
       .subscribe(res => {
         if (res && res.taskId) {

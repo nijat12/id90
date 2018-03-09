@@ -27,11 +27,7 @@
                             </div>
                         </div>
 
-                        <ion-card-content *ngIf="task" class="task-notes" [ngClass]="{
-                            'first-level':task.importance === '1',
-                            'second-level':task.importance === '2',
-                            'third-level':task.importance === '3'
-                          }">
+                        <ion-card-content *ngIf="task" class="task-notes">
                             {{task.name}}
                         </ion-card-content>
                         <ion-row class="date" *ngIf="task.dueDate">
