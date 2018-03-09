@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 require('./routes')(app);
 
-server.listen(3000, () => {
+server.listen(process.env.PORT, () => {
     console.log(chalk.green('Listening on port 3000'));
 });
 
