@@ -11,7 +11,7 @@ export class DelayDragLiftDirective {
     @HostListener('touchmove', ['$event'])
     // @HostListener('mousemove', ['$event'])
     onMove(e: Event) {
-        var currentX = e.touches[0].clientX;
+        var currentX = e['touches'][0].clientX;
 
         if (this.lastX+20< currentX || this.lastX-20> currentX) {
             // Movement is Horizantal
@@ -21,7 +21,7 @@ export class DelayDragLiftDirective {
                 clearTimeout(this.touchTimeout);
             }
         }
-        this.lastX = e.touches[0].clientX;
+        this.lastX = e['touches'][0].clientX;
     }
 
     @HostListener('touchstart', ['$event'])
