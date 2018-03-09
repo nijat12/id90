@@ -28,6 +28,7 @@ npm
 ionic
 ionic-cli
 mysql
+Google Chrome CORS Plugin
 ```
 
 ### Running the Front-End
@@ -39,7 +40,7 @@ npm install
 ionic serve
 ```
 
-This should install the necessary libraries for you to serve the app on a browser
+This should install the necessary libraries for you to serve the app on a browser. You will need a CORS plugin fro Chrome since ionic serve uses http but the backend is on https.
 
 ### Set Up the Database
 
